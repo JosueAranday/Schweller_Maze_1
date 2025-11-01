@@ -24,3 +24,4 @@ public:
     vector<Vertex*> neighs;
 
 };
+#endif
