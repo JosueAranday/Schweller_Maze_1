@@ -39,7 +39,9 @@ Each maze is represented as a string with the following format:
 
 For instance, the maze represented as the string
 
+```
 "# ####\n#    #\n# ## #\n#     #\n### ##\n"
+```
 
 which prints as:
 ```
