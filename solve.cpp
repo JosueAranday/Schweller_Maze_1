@@ -12,6 +12,7 @@ using namespace std;
 
 string solve(string maze) {
 	unordered_map<int, Vertex*> vertexMap;
+	unordered_map<Vertex*, Vertex*> edgesMap;
 	string solvedMaze = "";
 	size_t rowLength = maze.find('\n') + 1;
 	int counter = 0;
@@ -19,6 +20,7 @@ string solve(string maze) {
 	int yCoor = 0;
 	int xWidth = rowLength - 1;
 	int yHeight = 0;
+
 	while (counter < maze.size()) {		// Runs in O(s) time
 		// Create vertices for each open space in the maze
 		char curr = maze[counter];
@@ -27,6 +29,7 @@ string solve(string maze) {
 			if (xCoor > 0 && maze[counter - 1] == ' ') {		// Left neighbor
 				vertexMap[counter]->neighs.push_back(vertexMap[counter - 1]);
 				vertexMap[counter - 1]->neighs.push_back(vertexMap[counter]);
+
 			}
 			if (yCoor > 0 && maze[counter - rowLength] == ' ') {		// Top neighbor
 				vertexMap[counter]->neighs.push_back(vertexMap[counter - rowLength]);
@@ -54,7 +57,8 @@ string solve(string maze) {
 	Vertex* endVertex = nullptr;
 	unordered_set<Vertex*> marked;
 	queue<Vertex*> Q;
-
+	
+	//	Find start and end vertices
 	for (const auto& pair : vertexMap) {		// Runs in O(s) time
 		if (pair.second->row == 0 || pair.second->row == yHeight - 1 ||
 			pair.second->col == 0 || pair.second->col == xWidth - 1) {
