@@ -8,20 +8,20 @@
 #include "vertex.h"
 
 // Trying to visualize the maze solving process
-//#include <thread>   // For std::this_thread::sleep_for
-//#include <chrono>   // For std::chrono::seconds and milliseconds
-//#include <cstdlib>  // For system()
+#include <thread>   // For std::this_thread::sleep_for
+#include <chrono>   // For std::chrono::seconds and milliseconds
+#include <cstdlib>  // For system()
 
 using namespace std;
 
 // Function to clear the console screen
-//void clearScreen() {
-//#ifdef _WIN32
-//	system("cls");
-//#else
-//	system("clear");
-//#endif
-//}
+void clearScreen() {
+#ifdef _WIN32
+	system("cls");
+#else
+	system("clear");
+#endif
+}
 
 string solve(string maze) {
 	unordered_map<int, Vertex*> vertexMap;
@@ -114,24 +114,27 @@ string solve(string maze) {
 
 	// Step 2: Trace breadCrumbs from end to start to mark path
 	// from endVertex to startVertex
+	clearScreen();
+	cout << maze << endl;
+	std::this_thread::sleep_for(std::chrono::seconds(1));
 
 	Vertex* current = endVertex;
 	while (current != startVertex) {		// Runs in O(d) time, d = distance from start to end
 		int index = current->row * rowLength + current->col;	// Nice calculation to find its position in the original index
 		maze[index] = 'o';
 		current = breadCrumbs[current];
-		//clearScreen();
-		//cout << maze << endl;
-		//std::this_thread::sleep_for(std::chrono::seconds(1)); // Wait 1 second
+		clearScreen();
+		cout << maze << endl;
+		std::this_thread::sleep_for(std::chrono::microseconds(100000)); // Wait 1 second
 	}
 
 	// Mark the start vertex as well
 	int startIndex = startVertex->row * rowLength + startVertex->col;
 	maze[startIndex] = 'o';
 	// Optional: Print out the solved maze at each step
-	//clearScreen();
-	//cout << maze << endl;
-	//std::this_thread::sleep_for(std::chrono::seconds(1)); // Wait 1 second
+	clearScreen();
+	cout << maze << endl;
+	std::this_thread::sleep_for(std::chrono::seconds(1)); // Wait 1 second
 
 
 	for (auto& pair : vertexMap) {
